@@ -9,6 +9,7 @@ namespace Models
     {
         //public int Identifier { get; set; }
 
+        public decimal PESEL { get; set; }
         //[Required]
         public string FirstName { get; set; }
         //[Required]

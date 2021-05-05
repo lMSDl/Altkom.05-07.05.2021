@@ -14,6 +14,11 @@ namespace DAL.Configurations
         public void Configure(EntityTypeBuilder<Person> builder)
         {
             //builder.HasKey(x => x.Identifier);
+            //builder.HasKey(x => new { x.FirstName, x.LastName });
+
+            builder.Property(x => x.PESEL).HasPrecision(11, 0);
+            builder.HasAlternateKey(x => x.PESEL);
+            //builder.HasAlternateKey(x => new { x.FirstName, x.LastName });
 
             builder.ToTable("People", "efc");
 
@@ -28,6 +33,7 @@ namespace DAL.Configurations
                 .HasPrecision(0);
 
             builder.Property(x => x.SomeData)
+                //.HasColumnName("DataSome")
                 .HasPrecision(10, 5)
                 .HasDefaultValue(1000);
 
