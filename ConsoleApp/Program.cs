@@ -1,12 +1,14 @@
 ﻿using DAL;
 using Microsoft.EntityFrameworkCore;
+using Models;
 using System;
+using System.Threading.Tasks;
 
 namespace ConsoleApp
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             //połączenie do bazy w pliku (localdb)
             var contextOptions = new DbContextOptionsBuilder<EFContext>()
@@ -14,7 +16,9 @@ namespace ConsoleApp
 
             using (var context = new EFContext(contextOptions.Options))
             {
-                
+                //await context.People.ToListAsync();
+
+                await context.Set<Person>().ToListAsync();
             }
 
             //połączenie do bazy w SqlServer

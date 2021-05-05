@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DAL.Configurations;
+using Microsoft.EntityFrameworkCore;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,8 @@ namespace DAL
     public class EFContext : DbContext
     {
         private readonly string _connectionString;
+
+        //public DbSet<Person> People { get; set; } 
 
         public EFContext()
         {
@@ -39,6 +43,22 @@ namespace DAL
             }
 
             base.OnConfiguring(optionsBuilder);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            /* modelBuilder.Entity<Person>()
+                 .Property(x => x.LastName)
+                 .HasMaxLength(24)
+                 .IsRequired();*/
+
+            //new PersonConfiguration().Configure(modelBuilder.Entity<Person>());
+            modelBuilder.ApplyConfiguration(new PersonConfiguration());
+            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersonConfiguration).Assembly);
+
+            modelBuilder.Ignore<Address>();
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
