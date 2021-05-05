@@ -21,5 +21,9 @@ namespace Models
         public Address Address { get; set; }
 
         public decimal SomeData { get; set; }
+
+        public DateTime Modified { get; set; }
+
+        public string FullName { get; set; }
     }
 }

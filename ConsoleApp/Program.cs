@@ -18,13 +18,15 @@ namespace ConsoleApp
             {
                 //await context.People.ToListAsync();
 
-                await context.Set<Person>().ToListAsync();
+               // await context.Set<Person>().ToListAsync();
             }
 
             //połączenie do bazy w SqlServer
             using (var context = new EFContext(@"Server=(local);Database=EFC;Integrated Security=true"))
             {
-
+                var person = context.Set<Person>().Find(8);
+                person.LastName = "Adamski";
+                context.SaveChanges();
             }
         }
     }

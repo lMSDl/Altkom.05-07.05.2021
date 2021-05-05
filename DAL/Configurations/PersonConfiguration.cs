@@ -28,8 +28,19 @@ namespace DAL.Configurations
                 .HasPrecision(0);
 
             builder.Property(x => x.SomeData)
-                .HasPrecision(10, 5);
+                .HasPrecision(10, 5)
+                .HasDefaultValue(1000);
 
+            //Shadow Property
+            builder.Property<DateTime>("Created")
+                .HasDefaultValueSql("getdate()");
+                //.ValueGeneratedOnAdd();
+
+            builder.Property(x => x.Modified)
+                .ValueGeneratedOnAddOrUpdate();
+
+            builder.Property(x => x.FullName)
+                .HasComputedColumnSql("[LastName] + ' ' + [FirstName]");
 
             builder.Ignore(x => x.Address);
         }
