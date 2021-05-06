@@ -57,7 +57,11 @@ namespace DAL.Configurations
             builder.Property(x => x.FullName).HasComputedColumnSql("[LastName] + ' ' + [FirstName]");
 
 
-            builder.Ignore(x => x.Address);
+            //builder.Ignore(x => x.Address);
+            builder.HasOne(x => x.Address)
+                .WithMany(x => x.People)
+                .HasForeignKey(x => x.AddressId);
+
         }
     }
 }

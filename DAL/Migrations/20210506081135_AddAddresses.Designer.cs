@@ -4,35 +4,22 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(EFContext))]
-    partial class EFContextModelSnapshot : ModelSnapshot
+    [Migration("20210506081135_AddAddresses")]
+    partial class AddAddresses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("AddressCompany", b =>
-                {
-                    b.Property<int>("AddressesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CompaniesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AddressesId", "CompaniesId");
-
-                    b.HasIndex("CompaniesId");
-
-                    b.ToTable("AddressCompany");
-                });
 
             modelBuilder.Entity("Models.Address", b =>
                 {
@@ -53,24 +40,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Address");
-                });
-
-            modelBuilder.Entity("Models.Company", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OwnerId")
-                        .IsUnique();
-
-                    b.ToTable("Company");
                 });
 
             modelBuilder.Entity("Models.Person", b =>
@@ -135,49 +104,16 @@ namespace DAL.Migrations
                     b.ToTable("People", "efc");
                 });
 
-            modelBuilder.Entity("AddressCompany", b =>
-                {
-                    b.HasOne("Models.Address", null)
-                        .WithMany()
-                        .HasForeignKey("AddressesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Models.Company", null)
-                        .WithMany()
-                        .HasForeignKey("CompaniesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Models.Company", b =>
-                {
-                    b.HasOne("Models.Person", "Owner")
-                        .WithOne("Company")
-                        .HasForeignKey("Models.Company", "OwnerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
-                });
-
             modelBuilder.Entity("Models.Person", b =>
                 {
-                    b.HasOne("Models.Address", "Address")
+                    b.HasOne("Models.Address", null)
                         .WithMany("People")
                         .HasForeignKey("AddressId");
-
-                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("Models.Address", b =>
                 {
                     b.Navigation("People");
-                });
-
-            modelBuilder.Entity("Models.Person", b =>
-                {
-                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }

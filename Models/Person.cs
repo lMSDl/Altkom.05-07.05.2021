@@ -19,7 +19,8 @@ namespace Models
         //public Nullable<DateTime> BirthDate { get; set; }
         public DateTime? BirthDate { get; set; }
 
-        [NotMapped]
+        //[NotMapped]
+        public int? AddressId { get; set; }
         public Address Address { get; set; }
 
         public decimal SomeData { get; set; }
@@ -27,5 +28,7 @@ namespace Models
         public DateTime Modified { get; set; }
 
         public string FullName { get; set; }
+
+        public Company Company {get; set;}
     }
 }

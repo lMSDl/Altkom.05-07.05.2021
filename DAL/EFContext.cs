@@ -47,16 +47,17 @@ namespace DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Address>();
             /* modelBuilder.Entity<Person>()
                  .Property(x => x.LastName)
                  .HasMaxLength(24)
                  .IsRequired();*/
 
             //new PersonConfiguration().Configure(modelBuilder.Entity<Person>());
-            modelBuilder.ApplyConfiguration(new PersonConfiguration());
-            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersonConfiguration).Assembly);
+            //modelBuilder.ApplyConfiguration(new PersonConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersonConfiguration).Assembly);
 
-            modelBuilder.Ignore<Address>();
+            //modelBuilder.Ignore<Address>();
 
             base.OnModelCreating(modelBuilder);
         }
