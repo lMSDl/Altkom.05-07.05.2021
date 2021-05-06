@@ -1,4 +1,5 @@
 ﻿using DAL;
+using DAL.Services;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
@@ -16,17 +17,13 @@ namespace ConsoleApp
 
             using (var context = new EFContext(contextOptions.Options))
             {
-                //await context.People.ToListAsync();
-
-               // await context.Set<Person>().ToListAsync();
+                await new PeopleService(context).ReadAsync();
             }
 
             //połączenie do bazy w SqlServer
             using (var context = new EFContext(@"Server=(local);Database=EFC;Integrated Security=true"))
             {
-                var person = context.Set<Student>().Find(7);
-                //person.LastName = "Adamski";
-                //context.SaveChanges();
+                await new Service<Address>(context).ReadAsync();
             }
         }
     }
