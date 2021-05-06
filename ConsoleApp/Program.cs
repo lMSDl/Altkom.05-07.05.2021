@@ -17,13 +17,15 @@ namespace ConsoleApp
 
             using (var context = new EFContext(contextOptions.Options))
             {
+                context.Database.Migrate();
                 await new PeopleService(context).ReadAsync();
             }
 
             //połączenie do bazy w SqlServer
             using (var context = new EFContext(@"Server=(local);Database=EFC;Integrated Security=true"))
             {
-                await new Service<Address>(context).ReadAsync();
+                context.Database.Migrate();
+                await new Service<Person>(context).ReadAsync();
             }
         }
     }

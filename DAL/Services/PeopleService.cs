@@ -14,5 +14,10 @@ namespace DAL.Services
         public PeopleService(DbContext context) : base(context)
         {
         }
+
+        public async Task<Person> FindByPesel(decimal pesel)
+        {
+           return await _context.Set<Person>().SingleOrDefaultAsync(x => x.PESEL == pesel);
+        }
     }
 }

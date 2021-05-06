@@ -7,5 +7,6 @@ namespace Services.Interfaces
 {
     public interface IPeopleService : IService<Person>
     {
+        Task<Person> FindByPesel(decimal pesel);
     }
 }
