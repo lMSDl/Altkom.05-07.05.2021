@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Models
 {
     //[Table("People", Schema = "efc")]
+    //[Microsoft.EntityFrameworkCore.Index(nameof(BirthDate), IsUnique = true, Name = "Index_BirthDate")]
     public class Person : Entity
     {
         //public int Identifier { get; set; }

@@ -29,8 +29,16 @@ namespace DAL.Configurations
             builder.Property(x => x.FirstName)
                    .IsRequired();
 
+            builder.HasIndex(x => new { x.FirstName, x.LastName })
+                .HasDatabaseName("Index_FirstLastName");
+
             builder.Property(x => x.BirthDate)
                 .HasPrecision(0);
+
+            builder.HasIndex(x => x.BirthDate)
+                .IsUnique()
+                //.HasFilter("[BirthDate] IS NOT NULL")
+                .HasFilter(null);
 
             builder.Property(x => x.SomeData)
                 //.HasColumnName("DataSome")
@@ -40,13 +48,14 @@ namespace DAL.Configurations
             //Shadow Property
             builder.Property<DateTime>("Created")
                 .HasDefaultValueSql("getdate()");
-                //.ValueGeneratedOnAdd();
+            //.ValueGeneratedOnAdd();
 
             builder.Property(x => x.Modified)
                 .ValueGeneratedOnAddOrUpdate();
 
-            builder.Property(x => x.FullName)
-                .HasComputedColumnSql("[LastName] + ' ' + [FirstName]");
+            //builder.Ignore(x => x.FullName);
+            builder.Property(x => x.FullName).HasComputedColumnSql("[LastName] + ' ' + [FirstName]");
+
 
             builder.Ignore(x => x.Address);
         }

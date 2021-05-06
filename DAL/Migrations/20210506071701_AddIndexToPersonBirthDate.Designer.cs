@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(EFContext))]
-    partial class EFContextModelSnapshot : ModelSnapshot
+    [Migration("20210506071701_AddIndexToPersonBirthDate")]
+    partial class AddIndexToPersonBirthDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +39,7 @@ namespace DAL.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
                         .ValueGeneratedOnAddOrUpdate()
@@ -67,11 +69,7 @@ namespace DAL.Migrations
 
                     b.HasAlternateKey("PESEL");
 
-                    b.HasIndex("BirthDate")
-                        .IsUnique();
-
-                    b.HasIndex("FirstName", "LastName")
-                        .HasDatabaseName("Index_FirstLastName");
+                    b.HasIndex("BirthDate");
 
                     b.ToTable("People", "efc");
                 });
