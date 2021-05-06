@@ -15,7 +15,6 @@ namespace DAL.Configurations
         {
             builder.HasMany(x => x.People).WithOne(x => x.Address).HasForeignKey(x => x.AddressId);
 
-            //builder.HasMany(x => x.Companies).WithMany(x => x.Addresses);
             builder.HasMany(x => x.Companies).WithMany(x => x.Addresses);
         }
     }

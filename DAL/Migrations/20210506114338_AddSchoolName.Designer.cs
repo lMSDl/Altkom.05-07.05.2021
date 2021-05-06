@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(EFContext))]
-    partial class EFContextModelSnapshot : ModelSnapshot
+    [Migration("20210506114338_AddSchoolName")]
+    partial class AddSchoolName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,23 +142,6 @@ namespace DAL.Migrations
                     b.HasDiscriminator<int>("ClassType").HasValue(1);
                 });
 
-            modelBuilder.Entity("Models.LargeCompany", b =>
-                {
-                    b.HasBaseType("Models.Company");
-
-                    b.Property<int>("NumberOfEmployees")
-                        .HasColumnType("int");
-
-                    b.ToTable("LargeCompany");
-                });
-
-            modelBuilder.Entity("Models.SmallCompany", b =>
-                {
-                    b.HasBaseType("Models.Company");
-
-                    b.ToTable("SmallCompany");
-                });
-
             modelBuilder.Entity("Models.Educator", b =>
                 {
                     b.HasBaseType("Models.Person");
@@ -220,24 +205,6 @@ namespace DAL.Migrations
                         .HasForeignKey("AddressId");
 
                     b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("Models.LargeCompany", b =>
-                {
-                    b.HasOne("Models.Company", null)
-                        .WithOne()
-                        .HasForeignKey("Models.LargeCompany", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Models.SmallCompany", b =>
-                {
-                    b.HasOne("Models.Company", null)
-                        .WithOne()
-                        .HasForeignKey("Models.SmallCompany", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Models.Address", b =>

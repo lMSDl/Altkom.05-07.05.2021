@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(EFContext))]
-    partial class EFContextModelSnapshot : ModelSnapshot
+    [Migration("20210506104141_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,9 +89,6 @@ namespace DAL.Migrations
                         .HasPrecision(0)
                         .HasColumnType("datetime2(0)");
 
-                    b.Property<int>("ClassType")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -136,55 +135,6 @@ namespace DAL.Migrations
                         .HasDatabaseName("Index_FirstLastName");
 
                     b.ToTable("People", "efc");
-
-                    b.HasDiscriminator<int>("ClassType").HasValue(1);
-                });
-
-            modelBuilder.Entity("Models.LargeCompany", b =>
-                {
-                    b.HasBaseType("Models.Company");
-
-                    b.Property<int>("NumberOfEmployees")
-                        .HasColumnType("int");
-
-                    b.ToTable("LargeCompany");
-                });
-
-            modelBuilder.Entity("Models.SmallCompany", b =>
-                {
-                    b.HasBaseType("Models.Company");
-
-                    b.ToTable("SmallCompany");
-                });
-
-            modelBuilder.Entity("Models.Educator", b =>
-                {
-                    b.HasBaseType("Models.Person");
-
-                    b.Property<string>("SchoolName")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SchoolName");
-
-                    b.Property<string>("Specialization")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue(3);
-                });
-
-            modelBuilder.Entity("Models.Student", b =>
-                {
-                    b.HasBaseType("Models.Person");
-
-                    b.Property<int>("IndexNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SchoolName")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SchoolName");
-
-                    b.HasDiscriminator().HasValue(2);
                 });
 
             modelBuilder.Entity("AddressCompany", b =>
@@ -220,24 +170,6 @@ namespace DAL.Migrations
                         .HasForeignKey("AddressId");
 
                     b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("Models.LargeCompany", b =>
-                {
-                    b.HasOne("Models.Company", null)
-                        .WithOne()
-                        .HasForeignKey("Models.LargeCompany", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Models.SmallCompany", b =>
-                {
-                    b.HasOne("Models.Company", null)
-                        .WithOne()
-                        .HasForeignKey("Models.SmallCompany", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Models.Address", b =>

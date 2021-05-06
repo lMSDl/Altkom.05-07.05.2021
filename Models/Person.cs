@@ -30,5 +30,7 @@ namespace Models
         public string FullName { get; set; }
 
         public Company Company {get; set;}
+
+        public int ClassType { get; set; }
     }
 }

@@ -47,7 +47,10 @@ namespace DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Address>();
+            modelBuilder.Entity<SmallCompany>().ToTable(nameof(SmallCompany));
+            modelBuilder.Entity<LargeCompany>().ToTable(nameof(LargeCompany));
+
+            modelBuilder.Entity<Student>().Property(x => x.SchoolName).HasColumnName(nameof(Student.SchoolName));
             /* modelBuilder.Entity<Person>()
                  .Property(x => x.LastName)
                  .HasMaxLength(24)

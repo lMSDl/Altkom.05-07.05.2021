@@ -62,6 +62,12 @@ namespace DAL.Configurations
                 .WithMany(x => x.People)
                 .HasForeignKey(x => x.AddressId);
 
+            builder.HasDiscriminator<int>("ClassType")
+            //builder.HasDiscriminator(x => x.ClassType)
+                .HasValue<Person>(1)
+                .HasValue<Student>(2)
+                .HasValue<Educator>(3);
+                //.IsComplete(false);
         }
     }
 }

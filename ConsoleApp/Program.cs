@@ -24,9 +24,9 @@ namespace ConsoleApp
             //połączenie do bazy w SqlServer
             using (var context = new EFContext(@"Server=(local);Database=EFC;Integrated Security=true"))
             {
-                var person = context.Set<Person>().Find(8);
-                person.LastName = "Adamski";
-                context.SaveChanges();
+                var person = context.Set<Student>().Find(7);
+                //person.LastName = "Adamski";
+                //context.SaveChanges();
             }
         }
     }
