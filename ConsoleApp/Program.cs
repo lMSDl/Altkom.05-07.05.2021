@@ -1,5 +1,6 @@
 ﻿using DAL;
 using DAL.Services;
+using DAL2.Models;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
@@ -22,10 +23,10 @@ namespace ConsoleApp
             }
 
             //połączenie do bazy w SqlServer
-            using (var context = new EFContext(@"Server=(local);Database=EFC;Integrated Security=true"))
+            using (var context = new EFCContext())
             {
                 //context.Database.Migrate();
-                var result = await new PeopleService(context).FindByPesel(12345678901);
+                var result = context.Set<DAL2.Models.Person>().ToListAsync(); ;
             }
         }
     }
