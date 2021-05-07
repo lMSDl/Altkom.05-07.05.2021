@@ -30,7 +30,8 @@ namespace DAL.Configurations
                    .IsRequired();
 
             builder.HasIndex(x => new { x.FirstName, x.LastName })
-                .HasDatabaseName("Index_FirstLastName");
+                .HasDatabaseName("Index_FirstLastName")
+                .IncludeProperties(x => new { x.BirthDate, x.PESEL });
 
             builder.Property(x => x.BirthDate)
                 .HasPrecision(0);
