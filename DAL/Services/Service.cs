@@ -40,7 +40,7 @@ namespace DAL.Services
             DeleteAsync(id).RunSynchronously();
         }
 
-        public async Task DeleteAsync(int id)
+        public virtual async Task DeleteAsync(int id)
         {
             //var entity = _context.Set<Person>().Find(id);
             //_context.Set<Person>().Remove(entity);
@@ -94,8 +94,8 @@ namespace DAL.Services
                 _context.Entry(entity).Property("LastName").IsModified = false;
             }
 
-            _context.ChangeTracker.DetectChanges();
-            Console.WriteLine(_context.ChangeTracker.DebugView.LongView);
+            //_context.ChangeTracker.DetectChanges();
+            //Console.WriteLine(_context.ChangeTracker.DebugView.LongView);
             await _context.SaveChangesAsync();
         }
     }

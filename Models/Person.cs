@@ -6,7 +6,7 @@ namespace Models
 {
     //[Table("People", Schema = "efc")]
     //[Microsoft.EntityFrameworkCore.Index(nameof(BirthDate), IsUnique = true, Name = "Index_BirthDate")]
-    public class Person : Entity
+    public class Person : Entity, IModifiedDate
     {
         //public int Identifier { get; set; }
 

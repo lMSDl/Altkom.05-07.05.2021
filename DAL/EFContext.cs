@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DAL
@@ -63,6 +64,17 @@ namespace DAL
             //modelBuilder.Ignore<Address>();
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            ChangeTracker.Entries<IModifiedDate>()
+                .Where(x => x.State == EntityState.Modified)
+                .Select(x => x.Entity)
+                .ToList()
+                .ForEach(x => x.Modified = DateTime.Now);
+
+            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }

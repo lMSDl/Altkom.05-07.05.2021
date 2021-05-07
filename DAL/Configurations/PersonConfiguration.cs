@@ -50,8 +50,8 @@ namespace DAL.Configurations
                 .HasDefaultValueSql("getdate()");
             //.ValueGeneratedOnAdd();
 
-            builder.Property(x => x.Modified)
-                .ValueGeneratedOnAddOrUpdate();
+            /*builder.Property(x => x.Modified)
+                .ValueGeneratedOnAddOrUpdate();*/
 
             //builder.Ignore(x => x.FullName);
             builder.Property(x => x.FullName).HasComputedColumnSql("[LastName] + ' ' + [FirstName]");
