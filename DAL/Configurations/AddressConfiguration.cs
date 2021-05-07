@@ -16,6 +16,8 @@ namespace DAL.Configurations
             builder.HasMany(x => x.People).WithOne(x => x.Address).HasForeignKey(x => x.AddressId);
 
             builder.HasMany(x => x.Companies).WithMany(x => x.Addresses);
+
+            builder.HasData(new Address { Id = 4,  Street = "Krakowska", City = "Kraków" }, new Address { Id = 5, Street = "Grańska", City = "Grańsk" });
         }
     }
 }
