@@ -27,6 +27,10 @@ namespace DAL.Services
         {
             entity.Id = 0;
             var entry = _context.Add(entity);
+
+            _context.ChangeTracker.DetectChanges();
+            Console.WriteLine(_context.ChangeTracker.DebugView.LongView);
+
             await _context.SaveChangesAsync();
             return entry.Entity.Id;
         }
@@ -41,10 +45,14 @@ namespace DAL.Services
             //var entity = _context.Set<Person>().Find(id);
             //_context.Set<Person>().Remove(entity);
             _context.Remove(await ReadAsync(id));
+
+            _context.ChangeTracker.DetectChanges();
+            Console.WriteLine(_context.ChangeTracker.DebugView.LongView);
+
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> ReadAsync()
+        public virtual async Task<IEnumerable<T>> ReadAsync()
         {
             return await _context.Set<T>().ToListAsync();
         }
@@ -59,10 +67,11 @@ namespace DAL.Services
             return ReadAsync(id).Result;
         }
 
-        public async Task<T> ReadAsync(int id)
+        public virtual async Task<T> ReadAsync(int id)
         {
             //return await _context.Set<T>().FindAsync(id);
             return await _context.FindAsync<T>(id);
+            //return await _context.Set<T>().AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public void Update(int id, T entity)
@@ -73,9 +82,20 @@ namespace DAL.Services
         public async Task UpdateAsync(int id, T entity)
         {
             entity.Id = id;
-            //_context.Attach(person);
-            //_context.Entry(person).State = EntityState.Modified;
-            _context.Update(entity);
+
+            _context.Set<T>().Local.Remove(_context.Set<T>().Local.SingleOrDefault(x => x.Id == id));
+            _context.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+            //_context.Update(entity);
+
+
+            if (entity is Person)
+            {
+                _context.Entry(entity).Property("LastName").IsModified = false;
+            }
+
+            _context.ChangeTracker.DetectChanges();
+            Console.WriteLine(_context.ChangeTracker.DebugView.LongView);
             await _context.SaveChangesAsync();
         }
     }

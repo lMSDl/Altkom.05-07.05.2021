@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Models;
 using Services.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.Services
@@ -17,7 +14,10 @@ namespace DAL.Services
 
         public async Task<Person> FindByPesel(decimal pesel)
         {
-           return await _context.Set<Person>().SingleOrDefaultAsync(x => x.PESEL == pesel);
+            var result = await _context.Set<Person>().Select(x => new Person() { Id = x.Id, PESEL = x.PESEL, LastName = x.LastName, BirthDate = x.BirthDate }).SingleOrDefaultAsync(x => x.PESEL == pesel);
+
+            //return new Person() { PESEL = result.PESEL, LastName = result.LastName, BirthDate = result.BirthDate };
+            return result;
         }
     }
 }

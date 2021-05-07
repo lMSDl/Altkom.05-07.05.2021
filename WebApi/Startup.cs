@@ -1,4 +1,5 @@
 using DAL;
+using DAL.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Models;
+using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,10 +30,15 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(x => x.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects);
 
-            services.AddDbContext<DbContext, EFContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlConnection"))
-            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+            services.AddDbContext<DbContext, EFContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
+            //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+            services.AddScoped<IService<Person>, PeopleService>();
+            //services.AddScoped<IService<Student>, EFContextService<Student>>();
+            services.AddScoped<IService<Student>, StudentsService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

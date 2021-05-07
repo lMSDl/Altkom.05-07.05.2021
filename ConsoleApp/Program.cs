@@ -24,8 +24,8 @@ namespace ConsoleApp
             //połączenie do bazy w SqlServer
             using (var context = new EFContext(@"Server=(local);Database=EFC;Integrated Security=true"))
             {
-                context.Database.Migrate();
-                await new Service<Person>(context).ReadAsync();
+                //context.Database.Migrate();
+                var result = await new PeopleService(context).FindByPesel(12345678901);
             }
         }
     }
